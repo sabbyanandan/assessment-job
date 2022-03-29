@@ -21,8 +21,8 @@ package org.springframework.assessmentjob.util;
  */
 public enum ReportKey {
 
-	TEAM_CREATED("Team created per month"),
-	COMMUNITY_CREATED("Community created per month"),
+	TEAM_CREATED("Team created PR per month"),
+	COMMUNITY_CREATED("Community created PR per month"),
 	CLOSED_AS_DUPE("Closed as duplicate (or equivelant) per month"),
 	CLOSED_AS_QUESTION("Closed as a question (StackOverflow/etc) per month"),
 	CLOSED_AS_DECLINED("Closed as declined/invalid or equivalent per month"),

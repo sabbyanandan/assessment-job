@@ -87,9 +87,9 @@ public class ReportGeneratingTasklet implements Tasklet {
 						Long ratio = 0L;
 						ratio = ((currentValue - previousValue) * 100) / currentValue;
 						if (ratio < 0) {
-							System.out.println(key.getValue() + " PRs decreased by " + ratio + "%");
+							System.out.println(key.getValue() + " decreased by " + ratio + "%");
 						} else {
-							System.out.println(key.getValue() + " PRs increased by " + ratio + "%");
+							System.out.println(key.getValue() + " increased by " + ratio + "%");
 						}
 					}
 

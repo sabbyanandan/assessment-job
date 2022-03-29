@@ -164,7 +164,7 @@ public class BatchConfiguration {
 				// .next(closedAsBugPerMonthStep(null))
 				// .next(closedAsTaskPerMonthStep(null))
 				// .next(closedAsDocumentationPerMonthStep(null))
-				// .next(notTriagedPerMonthStep(null))
+				.next(notTriagedPerMonthStep(null))
 				// .next(closedAsQuestionPerMonthStep(null))
 				// .next(monthlyDownloadsStep(null))
 				// .next(projectDownloadsStep(null))
