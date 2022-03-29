@@ -59,7 +59,7 @@ public class TeamCreatedPerMonthTasklet extends ReportTasklet {
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 
-		String query = this.properties.getProjectRepo() + " is:issue created:%s author:%s";
+		String query = this.properties.getProjectRepo() + " is:pr created:%s author:%s";
 		long issueCount = 0;
 
 		// For each month

@@ -59,7 +59,7 @@ public class CommunityCreatedPerMonthTasklet extends ReportTasklet {
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 
-		String query = properties.getProjectRepo() + " is:issue created:%s";
+		String query = properties.getProjectRepo() + " is:pr created:%s";
 		long issueCount = 0;
 
 		// For each month
@@ -70,7 +70,7 @@ public class CommunityCreatedPerMonthTasklet extends ReportTasklet {
 
 		List<Long> teamMemberCreated = report.get(ReportKey.TEAM_CREATED);
 
-		if(teamMemberCreated != null) {
+		if (teamMemberCreated != null) {
 			for (Long memberCount : teamMemberCreated) {
 				UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://api.github.com/search/issues")
 						.queryParam("q", String.format(query, getDateString(startDate, endDate)));
@@ -80,7 +80,12 @@ public class CommunityCreatedPerMonthTasklet extends ReportTasklet {
 				HttpEntity<String> response = this.restTemplate.getForEntity(uri, String.class);
 
 				Map<String, Object> result = new ObjectMapper().readValue(response.getBody(), HashMap.class);
+
+				// remove team-member PRs from the result, which would give the external
+				// contributions
 				issueCount = ((Integer) result.get("total_count")).longValue() - memberCount;
+				System.out.println("Total contributions =" + result.get("total_count") + " Member contributed =" + memberCount
+						+ " Difference = " + issueCount);
 
 				values.add(issueCount);
 

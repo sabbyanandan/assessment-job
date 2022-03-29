@@ -56,9 +56,9 @@ public class ReportGeneratingTasklet implements Tasklet {
 		System.out.println(">> GENERATING REPORT");
 		System.out.println(">> Report size = " + report.size());
 
-		for(ReportKey key : ReportKey.values()) {
-			Calendar c = Calendar.getInstance();   // this takes current date
-			c.add(Calendar.MONTH, -12);
+		for (ReportKey key : ReportKey.values()) {
+			Calendar c = Calendar.getInstance(); // this takes current date
+			c.add(Calendar.MONTH, -1);
 			c.set(Calendar.DAY_OF_MONTH, 1);
 			Date startDate = c.getTime();
 			c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
@@ -66,16 +66,31 @@ public class ReportGeneratingTasklet implements Tasklet {
 
 			List<Long> values = report.get(key);
 
-			if(values != null) {
+			if (values != null) {
 				System.out.println(key.getValue());
 
-				for (int i = values.size() - 1; i >= 0; i--){
+				Long previousValue = 0L;
+				for (int i = values.size() - 1; i >= 0; i--) {
 
-					if(this.properties.isOutputDates()) {
-						System.out.println(String.format("\t%s: %s", getDateString(startDate, endDate), values.get(i)));
-					}
-					else {
+					Long currentValue = values.get(i);
+					if (this.properties.isOutputDates()) {
+						System.out.println(String.format("\t%s: %s", getDateString(startDate, endDate), currentValue));
+					} else {
 						System.out.println(values.get(i));
+					}
+
+					// hack to find the ratio between external contributions from previous month
+
+					if (i == 1) {
+						previousValue = currentValue;
+					} else {
+						Long ratio = 0L;
+						ratio = ((currentValue - previousValue) * 100) / currentValue;
+						if (ratio < 0) {
+							System.out.println(key.getValue() + " PRs decreased by " + ratio + "%");
+						} else {
+							System.out.println(key.getValue() + " PRs increased by " + ratio + "%");
+						}
 					}
 
 					startDate = DateUtils.addMonths(startDate, 1);

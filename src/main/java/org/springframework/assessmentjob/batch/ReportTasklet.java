@@ -32,7 +32,7 @@ public abstract class ReportTasklet implements Tasklet {
 
 	protected final ProjectAssessmentProperties properties;
 
-	public static final int MONTHS = 13;
+	public static final int MONTHS = 2;
 
 	protected SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
